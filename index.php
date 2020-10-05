@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+$_SESSION['Kayalin'];
 
 function whatIsHappening()
 {
@@ -16,7 +17,7 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
-
+whatIsHappening();
 //your products with their price.
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -38,12 +39,13 @@ $totalValue = 0;
 //obtaining all the data from post.
 $zipcodeErr = $streetErr = $streetNumErr = $cityErr = "";
 $email = $_POST['email'];
-/*
+
+
 $zipCode= $_POST['zipcode'];
 $streetNumber=$_POST['streetnumber'];
 $streetName= $_POST['street'];
 $city= $_POST['city'];
-*/
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -52,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (is_numeric($_POST['zipcode'])) {
         // maybe combine these two? if there is input and this is numeric else ...
         $zipCode = test_input($_POST["zipcode"]);
+        $_SESSION['zipCodeSes']=$zipCode;
 
     } else {
         $zipcodeErr= "zipcode must be a number";
@@ -61,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetNumErr = "street number is required";
     } else if (is_numeric($_POST["streetnumber"])) {
         $streetNumber = test_input($_POST["streetnumber"]);
+        $_SESSION['streetnumber']=$streetNumber;
 
     } else {
         $streetNumErr = "street number must be a number";
@@ -71,14 +75,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cityErr = " city is required";
     } else {
         $city = test_input($_POST["city"]);
+        $_SESSION['city']=$city;
     }
     if (empty($_POST["street"])) {
         $streetErr = " street is required";
     } else {
         $street = test_input($_POST["street"]);
+        $_SESSION['streetSes']=$street;
     }
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
+        $_SESSION['email']=$email;
     } else {
 
     }
