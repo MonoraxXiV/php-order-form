@@ -45,9 +45,11 @@ $city= $_POST['city'];
 */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "zipcode is required";
     } else {
+        // maybe combine these two? if there is input and this is numeric else ...
         $zipCode = test_input($_POST["zipcode"]);
         if (is_numeric($zipCode)){
 
@@ -90,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 else {
-    echo "invalid e-mail";
+    
 }
 
 require 'form-view.php';
