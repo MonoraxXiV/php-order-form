@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(is_numeric($streetNumber)){
 
         }else {
-            echo "street number must be a number";
+            echo "street number must be a number"."   ";
         }
 
     }
@@ -80,6 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $street = test_input($_POST["street"]);
     }
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)){
+
+    }
+    else {
+        echo "e-mail adress is invalid." ."<br/>";
+    }
+
 }
 
     function test_input($data) {
@@ -89,12 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return $data;
     }
 
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)){
-
-}
-else {
-
-}
 
 require 'form-view.php';
 
