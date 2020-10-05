@@ -51,12 +51,12 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City: *</label>
-                    <input type="text" id="city" name="city" class="form-control"  value="<?php echo htmlspecialchars($_POST['city'] ?? '', ENT_QUOTES); ?>">
+                    <input type="text" id="city" name="city" class="form-control"  value="<?php echo $city?>">
                     <span class="error"> <?php echo $cityErr;?></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode *</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo htmlspecialchars($_POST['zipcode'] ?? '', ENT_QUOTES); ?>">
+                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo $zipCode?>">
                     <span class="error"> <?php echo $zipcodeErr;?></span>
                 </div>
             </div>
