@@ -37,17 +37,18 @@ $totalValue = 0;
 //obtaining all the data from post.
 $zipcodeErr=$streetErr=$streetNumErr=$cityErr= "";
 $email= $_POST['email'];
-/*
+
 $zipCode= $_POST['zipcode'];
 $streetNumber=$_POST['streetnumber'];
 $streetName= $_POST['street'];
 $city= $_POST['city'];
-*/
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "zipcode is required";
+
     } else {
         // maybe combine these two? if there is input and this is numeric else ...
         $zipCode = test_input($_POST["zipcode"]);
@@ -92,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 else {
-    
+
 }
 
 require 'form-view.php';
