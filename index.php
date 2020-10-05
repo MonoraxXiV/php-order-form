@@ -41,4 +41,21 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)){
 else {
     echo "invalid e-mail";
 }
+//validating if zipcode is a number
+$zipCode= $_POST['zipcode'];
+if (is_numeric($zipCode)){
+
+}else{
+    echo "zipcode must be a number";
+}
+//validating streetnumber is an actual number
+$streetNumber=$_POST['streetnumber'];
+if(is_numeric($streetNumber)){
+    echo "street number is valid";
+}else {
+    echo "street number must be a number";
+}
+
+
 require 'form-view.php';
+
