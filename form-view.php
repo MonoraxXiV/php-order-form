@@ -37,27 +37,27 @@
             <p><span class="error">* required field</span></p>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control" required value="<?php echo $_POST['street'] ?? ''; ?>">
-                    <span class="error">* street is required</span>
+                    <label for="street">Street: *</label>
+                    <input type="text" name="street" id="street" class="form-control"  value="<?php echo $_POST['street'] ?? ''; ?>">
+                    <span class="error"><?php echo $streetErr;?></span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" required value="<?php echo $_POST['streetnumber'] ?? ''; ?>">
-                    <span class="error">* street number is required</span>
+                    <label for="streetnumber">Street number: *</label>
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo $_POST['streetnumber'] ?? ''; ?>">
+                    <span class="error"><?php echo $streetNumErr;?></span>
 
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control" required value="<?php echo $_POST['city'] ?? ''; ?>">
-                    <span class="error">* city is required</span>
+                    <label for="city">City: *</label>
+                    <input type="text" id="city" name="city" class="form-control"  value="<?php echo $_POST['city'] ?? ''; ?>">
+                    <span class="error"> <?php echo $cityErr;?></span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control" required value="<?php echo $_POST['zipcode'] ?? ''; ?>">
-                    <span class="error">* zipcode is required</span>
+                    <label for="zipcode">Zipcode *</label>
+                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo htmlspecialchars($_POST['zipcode'] ?? '', ENT_QUOTES); ?>">
+                    <span class="error"> <?php echo $zipcodeErr;?></span>
                 </div>
             </div>
         </fieldset>
