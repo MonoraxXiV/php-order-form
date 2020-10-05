@@ -15,7 +15,7 @@ You will add a counter at the bottom of the page that shows the total amount of 
 
 You can start modifying index.php and form-view.php, they already contain some code to help you on your way.
 Required features
-Step 1: Validation
+Step 1: Validation -> DONE
 
     Validate that the field e-mail is filled in and a valid e-mail address
     Make sure that the street, street number, city and zipcode is a required field.
