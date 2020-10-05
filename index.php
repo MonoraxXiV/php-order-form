@@ -84,9 +84,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
     else {
-        echo "e-mail adress is invalid." ."<br/>";
-    }
 
+    }
+    if ($zipcodeErr=$streetErr=$streetNumErr=$cityErr== ""){
+        echo "your order has been sent";
+    }
 }
 
     function test_input($data) {
