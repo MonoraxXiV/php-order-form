@@ -5,7 +5,8 @@ declare(strict_types=1);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
-function whatIsHappening() {
+function whatIsHappening()
+{
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
     echo '<h2>$_POST</h2>';
@@ -35,68 +36,66 @@ $products = [
 $totalValue = 0;
 //testing showed valid e-mail for my own
 //obtaining all the data from post.
-$zipcodeErr=$streetErr=$streetNumErr=$cityErr= "";
-$email= $_POST['email'];
-
+$zipcodeErr = $streetErr = $streetNumErr = $cityErr = "";
+$email = $_POST['email'];
+/*
 $zipCode= $_POST['zipcode'];
 $streetNumber=$_POST['streetnumber'];
 $streetName= $_POST['street'];
 $city= $_POST['city'];
-
+*/
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "zipcode is required";
-
-    } else {
+    } else if (is_numeric($_POST['zipcode'])) {
         // maybe combine these two? if there is input and this is numeric else ...
         $zipCode = test_input($_POST["zipcode"]);
-        if (is_numeric($zipCode)){
 
-        }else{
-            echo "zipcode must be a number";
-        }
+    } else {
+        $zipcodeErr= "zipcode must be a number";
     }
+
     if (empty($_POST["streetnumber"])) {
         $streetNumErr = "street number is required";
-    } else {
+    } else if (is_numeric($_POST["streetnumber"])) {
         $streetNumber = test_input($_POST["streetnumber"]);
 
-        if(is_numeric($streetNumber)){
-
-        }else {
-            echo "street number must be a number"."   ";
-        }
-
+    } else {
+        $streetNumErr = "street number must be a number";
     }
+
+
     if (empty($_POST["city"])) {
         $cityErr = " city is required";
     } else {
-        $city = test_input($_POST["street"]);
+        $city = test_input($_POST["city"]);
     }
     if (empty($_POST["street"])) {
-        $streetErr= " street is required";
+        $streetErr = " street is required";
     } else {
         $street = test_input($_POST["street"]);
     }
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)){
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    } else {
 
     }
-    else {
-
-    }
-    if ($zipcodeErr=$streetErr=$streetNumErr=$cityErr== ""){
+//fixed this by making it compare all seperately, otherwise it assigns the value.
+    if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
         echo "your order has been sent";
     }
+
 }
 
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 
 
 require 'form-view.php';
