@@ -34,28 +34,64 @@ $products = [
 
 $totalValue = 0;
 //testing showed valid e-mail for my own
+//obtaining all the data from post.
+$zipcodeErr=$streetErr=$streetNumErr=$cityErr= "";
 $email= $_POST['email'];
-if (filter_var($email, FILTER_VALIDATE_EMAIL)){
-    echo "valid e-mail";
+/*
+$zipCode= $_POST['zipcode'];
+$streetNumber=$_POST['streetnumber'];
+$streetName= $_POST['street'];
+$city= $_POST['city'];
+*/
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["zipcode"])) {
+        $zipcodeErr = "zipcode is required";
+    } else {
+        $zipCode = test_input($_POST["zipcode"]);
+        if (is_numeric($zipCode)){
+
+        }else{
+            echo "zipcode must be a number";
+        }
+    }
+    if (empty($_POST["streetnumber"])) {
+        $streetNumErr = "street number is required";
+    } else {
+        $streetNumber = test_input($_POST["streetnumber"]);
+
+        if(is_numeric($streetNumber)){
+
+        }else {
+            echo "street number must be a number";
+        }
+
+    }
+    if (empty($_POST["city"])) {
+        $cityErr = " city is required";
+    } else {
+        $city = test_input($_POST["street"]);
+    }
+    if (empty($_POST["street"])) {
+        $streetErr= " street is required";
+    } else {
+        $street = test_input($_POST["street"]);
+    }
+}
+
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)){
+
 }
 else {
     echo "invalid e-mail";
 }
-//validating if zipcode is a number
-$zipCode= $_POST['zipcode'];
-if (is_numeric($zipCode)){
-
-}else{
-    echo "zipcode must be a number";
-}
-//validating streetnumber is an actual number
-$streetNumber=$_POST['streetnumber'];
-if(is_numeric($streetNumber)){
-    echo "street number is valid";
-}else {
-    echo "street number must be a number";
-}
-
 
 require 'form-view.php';
 
