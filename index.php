@@ -20,7 +20,7 @@ function whatIsHappening()
 
 whatIsHappening();
 //your products with their price.
-$products = [
+$sandwiches = [
     ['name' => 'Club Ham', 'price' => 3.20],
     ['name' => 'Club Cheese', 'price' => 3],
     ['name' => 'Club Cheese & Ham', 'price' => 4],
@@ -28,12 +28,21 @@ $products = [
     ['name' => 'Club Salmon', 'price' => 5]
 ];
 
-$products = [
+$drinks = [
     ['name' => 'Cola', 'price' => 2],
     ['name' => 'Fanta', 'price' => 2],
     ['name' => 'Sprite', 'price' => 2],
     ['name' => 'Ice-tea', 'price' => 3],
 ];
+//get food
+//change names
+$food=$_GET['food'];
+
+if ($food==1){
+    $products=$sandwiches;
+} else if ($food==0){
+    $products=$drinks;
+}
 
 $totalValue = 0;
 //testing showed valid e-mail for my own
@@ -66,7 +75,7 @@ if (isset($_SESSION['zipCodeSes'])) {
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "zipcode is required";
     } else if (is_numeric($_POST['zipcode'])) {
-        // maybe combine these two? if there is input and this is numeric else ...
+
         $zipCode = test_input($_POST["zipcode"]);
         $_SESSION['zipCodeSes'] = $zipCode;
 
@@ -102,7 +111,7 @@ if (isset($_SESSION['zipCodeSes'])) {
     } else {
         echo "error, invalid e-mail";
     }
-//fixed this by making it compare all seperately, otherwise it assigns the value.
+//fixed this by making it compare all separately, otherwise it assigns the value.
     if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
         echo "your order has been sent";
     }
