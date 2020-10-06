@@ -1,7 +1,10 @@
 <?php
 //this line makes PHP behave in a more strict way
 declare(strict_types=1);
+ini_set('display_errors', '1');
 
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
@@ -37,30 +40,23 @@ $drinks = [
 //gets the data food, being the link between drink/food.
 //shows different arrays depending on food.
 //still need to find a way to change the default to food as well.
-$food=$_GET['food'];
-if (!isset($food)){
-    $products=$sandwiches;
-}
-else if($food==0){
-    $products=$drinks;
+$food = $_GET['food'];
+if (!isset($food)) {
+    $products = $sandwiches;
+} else if ($food == 0) {
+    $products = $drinks;
 } else {
-    $products=$sandwiches;
+    $products = $sandwiches;
 }
 $totalValue = 0;
 
-//changing time depending if express delivery was checked or not
-$time="It will take 2 hours for your food to arrive.";
-if(isset($_POST['express_delivery'])){
-    $time="It will take 45 minutes for your food to arrive.";
-    //also adding price to the total value;
-    $totalValue+5;
-}
+
 //testing showed valid e-mail for my own
 //obtaining all the data from post.
 $zipcodeErr = $streetErr = $streetNumErr = $cityErr = "";
 
-if (isset($_POST['email'])){
-    $email=$_POST['email'];
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
 }
 /*
 $zipCode= $_POST['zipcode'];
@@ -110,12 +106,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "error, invalid e-mail";
     }
+    //changing time depending if express delivery was checked or not
+    $time = "It will take 2 hours for your food to arrive.";
+    if (isset($_POST['express_delivery'])) {
+        $time = "It will take 45 minutes for your food to arrive.";
+        //also adding price to the total value;
+        $totalValue += 5;
+    }
+
+
+    //check which checkboxes are checked
+
+    $checkboxes = isset($_POST['products']) ? $_POST['products'] : array();
+    var_dump($_POST['products']);
+    // for each of these checked checkboxes, add the product price to totalValue.
+    foreach ($checkboxes as $value) {
+        $price=strval($_GET['products']);
+        $totalValue =$price;
+    }
+    //array keys, echo price in value in form-view
 //fixed this by making it compare all separately, otherwise it assigns the value.
+    if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
+        echo "your order has been sent." . $time;
+    }
+    $_SESSION['totalses'] += $totalValue;
 }
 //First check for post, then check for session, not opposite.
-if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
-    echo "your order has been sent." .$time;
-}
+
 if (isset($_SESSION['streetnumber'])) {
     $streetNumber = test_input($_SESSION['streetnumber']);
 }
@@ -130,6 +147,9 @@ if (isset($_SESSION['city'])) {
 }
 if (isset($_SESSION['zipCodeSes'])) {
     $zipCode = $_SESSION['zipCodeSes'];
+}
+if (isset($_SESSION['totalses'])) {
+    $totalValue = $_SESSION['totalses'];
 }
 function test_input($data)
 {
