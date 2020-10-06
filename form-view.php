@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number: *</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value=<?php echo $streetNumber?>
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo $streetNumber?>">
                     <span class="error"><?php echo $streetNumErr;?></span>
 
                 </div>
