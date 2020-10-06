@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
-$_SESSION['Kayalin'];
+
 
 function whatIsHappening()
 {
@@ -34,43 +34,42 @@ $drinks = [
     ['name' => 'Sprite', 'price' => 2],
     ['name' => 'Ice-tea', 'price' => 3],
 ];
-//get food
-//change names
+//gets the data food, being the link between drink/food.
+//shows different arrays depending on food.
+//still need to find a way to change the default to food as well.
 $food=$_GET['food'];
-
-if ($food==1){
+if (!isset($food)){
     $products=$sandwiches;
-} else if ($food==0){
-    $products=$drinks;
 }
-
+else if($food==0){
+    $products=$drinks;
+} else {
+    $products=$sandwiches;
+}
 $totalValue = 0;
+
+//changing time depending if express delivery was checked or not
+$time="It will take 2 hours for your food to arrive.";
+if(isset($_POST['express_delivery'])){
+    $time="It will take 45 minutes for your food to arrive.";
+    //also adding price to the total value;
+    $totalValue+5;
+}
 //testing showed valid e-mail for my own
 //obtaining all the data from post.
 $zipcodeErr = $streetErr = $streetNumErr = $cityErr = "";
-$email = $_POST['email'];
 
+if (isset($_POST['email'])){
+    $email=$_POST['email'];
+}
 /*
 $zipCode= $_POST['zipcode'];
 $streetNumber=$_POST['streetnumber'];
 $streetName= $_POST['street'];
 $city= $_POST['city'];
 */
-if (isset($_SESSION['streetnumber'])) {
-    $streetNumber = test_input($_SESSION['streetnumber']);
-}
-if (isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-}
-if (isset($_SESSION['streetSes'])) {
-    $street = $_SESSION['streetSes'];
-}
-if (isset($_SESSION['city'])) {
-    $city = $_SESSION['city'];
-}
-if (isset($_SESSION['zipCodeSes'])) {
-    $zipCode = $_SESSION['zipCodeSes'];
-} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "zipcode is required";
@@ -112,12 +111,26 @@ if (isset($_SESSION['zipCodeSes'])) {
         echo "error, invalid e-mail";
     }
 //fixed this by making it compare all separately, otherwise it assigns the value.
-    if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
-        echo "your order has been sent";
-    }
-
 }
-
+//First check for post, then check for session, not opposite.
+if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
+    echo "your order has been sent." .$time;
+}
+if (isset($_SESSION['streetnumber'])) {
+    $streetNumber = test_input($_SESSION['streetnumber']);
+}
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+}
+if (isset($_SESSION['streetSes'])) {
+    $street = $_SESSION['streetSes'];
+}
+if (isset($_SESSION['city'])) {
+    $city = $_SESSION['city'];
+}
+if (isset($_SESSION['zipCodeSes'])) {
+    $zipCode = $_SESSION['zipCodeSes'];
+}
 function test_input($data)
 {
     $data = trim($data);
