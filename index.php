@@ -1,10 +1,7 @@
 <?php
 //this line makes PHP behave in a more strict way
 declare(strict_types=1);
-ini_set('display_errors', '1');
 
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
@@ -121,8 +118,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     var_dump($_POST['products']);
     // for each of these checked checkboxes, add the product price to totalValue.
     foreach ($checkboxes as $value) {
-        $price=strval($_GET['products']);
-        $totalValue =$price;
+
+        $totalValue +=$value;
     }
     //array keys, echo price in value in form-view
 //fixed this by making it compare all separately, otherwise it assigns the value.
