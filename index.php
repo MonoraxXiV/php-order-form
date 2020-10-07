@@ -18,7 +18,7 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-whatIsHappening();
+//whatIsHappening();
 //your products with their price.
 $sandwiches = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -103,19 +103,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "error, invalid e-mail";
     }
+
     //changing time depending if express delivery was checked or not
-    $time = "It will take 2 hours for your food to arrive.";
+
     if (isset($_POST['express_delivery'])) {
-        $time = "It will take 45 minutes for your food to arrive.";
+        $newTime=date("H:i", strtotime('+45 minutes'));
+        $time = "your food will arrive at ".$newTime;
         //also adding price to the total value;
         $totalValue += 5;
+    }else {
+        $newTime = date("H:i", strtotime('+2 hours'));
+        $time= "your food will arrive at ".$newTime;
     }
 
 
     //check which checkboxes are checked
 
-    $checkboxes = isset($_POST['products']) ? $_POST['products'] : array();
-    var_dump($_POST['products']);
+    $checkboxes = isset($_POST['products']) ? $_POST['products']: array();
+    //var_dump($_POST['products']);
     // for each of these checked checkboxes, add the product price to totalValue.
     foreach ($checkboxes as $value) {
 
@@ -127,6 +132,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "your order has been sent." . $time;
     }
     $_SESSION['totalses'] += $totalValue;
+
+    //mail ( string $email , string $subject , string $message [, mixed $additional_headers [, string $additional_parameters ]] ) : bool
+    $to = $email;
+    $subject = "your order";
+    $txt = "Hello customer, your order has been processed! It will arrive around ".$time;
+    $headers = 'From: webmaster@example.com' . "\r\n" .
+        'Reply-To: webmaster@example.com' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+    mail($to,$subject,$txt,$headers);
 }
 //First check for post, then check for session, not opposite.
 
