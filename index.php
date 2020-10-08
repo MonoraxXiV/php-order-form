@@ -134,24 +134,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     //check which checkboxes are checked
-    $checkboxes = isset($_POST['products']) ? $_POST['products']: array();
+
     //var_dump($_POST['products']);
     // for each of these checked checkboxes, add the product price to totalValue.
-    foreach ($checkboxes as $value) {
 
-        $totalValue +=$value;
-    }
     //array keys, echo price in value in form-view
 //fixed this by making it compare all separately, otherwise it assigns the value.
     if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
         echo "your order has been sent." . $time;
+        //moved foreach into here to see if total value will stop updating even upon errors
+        $checkboxes = isset($_POST['products']) ? $_POST['products']: array();
+        foreach ($checkboxes as $value) {
+            //value only shows the price, products shows the word array, products['name returns empty string];
+
+            $totalValue +=$value;
+        }
     }
     $_SESSION['totalses'] += $totalValue;
 
     //mail ( string $email , string $subject , string $message [, mixed $additional_headers [, string $additional_parameters ]] ) : bool
     $to = $email;
+    $toOwner="owner@gmail.com";
     $subject = "your order";
     $txt = "Hello customer, your order has been processed! It will arrive around ".$time;
+    $txtOwner= "A new order has arrived, expected at ".$time;
     $headers = 'From: webmaster@example.com' . "\r\n" .
         'Reply-To: webmaster@example.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
@@ -159,6 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //installed the sendmail to attempt to fix it.
     //still no mail arrival.
     //mail($to,$subject,$txt,$headers);
+    //mail($toOwner, $subject, $txt);
 }
 //First check for post, then check for session, not opposite.
 //section to check if there is session data, if so add it to the variable.
