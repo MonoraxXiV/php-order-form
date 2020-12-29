@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+ini_set('display_errors', '1');
 
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 function whatIsHappening()
 {
@@ -17,8 +20,9 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
+//uncomment this line below to get the information to check values.
+//whatIsHappening();
 
-whatIsHappening();
 //your products with their price. changed the names so they are easier to call on
 $sandwiches = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -133,16 +137,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    //check which checkboxes are checked
 
-    //var_dump($_POST['products']);
-    // for each of these checked checkboxes, add the product price to totalValue.
-
-    //array keys, echo price in value in form-view
 //fixed this by making it compare all separately, otherwise it assigns the value.
     if ($zipcodeErr == "" && $streetErr == "" && $streetNumErr == "" && $cityErr == "") {
         echo "your order has been sent." . $time;
         //moved foreach into here to see if total value will stop updating even upon errors
+        //check which checkboxes are checked
+        //var_dump($_POST['products']);
+        // for each of these checked checkboxes, add the product price to totalValue.
         $checkboxes = isset($_POST['products']) ? $_POST['products']: array();
         foreach ($checkboxes as $value) {
             //value only shows the price, products shows the word array, products['name returns empty string];
